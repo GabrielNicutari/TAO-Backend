@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAO-Backend", "TAO-Backend.csproj", "{2BDD95FB-052A-48C0-B186-22CB9F362E4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BDD95FB-052A-48C0-B186-22CB9F362E4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BDD95FB-052A-48C0-B186-22CB9F362E4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BDD95FB-052A-48C0-B186-22CB9F362E4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BDD95FB-052A-48C0-B186-22CB9F362E4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A658EEC0-9A14-4CF7-B685-238376047234}
+	EndGlobalSection
+EndGlobal
