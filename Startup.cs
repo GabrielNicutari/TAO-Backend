@@ -11,14 +11,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using TAO_Backend.Models;
 
 namespace TAO_Backend
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            _config = config;
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +36,10 @@ namespace TAO_Backend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TAO_Backend", Version = "v1" });
             });
+            services.AddDbContext<DBContext>(opt =>
+            {
+                opt.UseMySQL(_config.GetConnectionString("DefaultConnection"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +52,7 @@ namespace TAO_Backend
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TAO_Backend v1"));
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
