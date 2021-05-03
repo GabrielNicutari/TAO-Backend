@@ -4,8 +4,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TAO_Backend.CsvData;
 
 namespace TAO_Backend
 {
@@ -14,6 +16,8 @@ namespace TAO_Backend
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            /*var dataImporter = new DataImporter();
+            dataImporter.Import();*/
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
