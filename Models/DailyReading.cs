@@ -9,13 +9,9 @@ using Microsoft.EntityFrameworkCore;
 namespace TAO_Backend.Models
 {
     [Table("daily_readings")]
+    [Index(nameof(HouseReadingId), Name = "house_id_idx")]
     public partial class DailyReading
     {
-        public DailyReading()
-        {
-            Users = new HashSet<User>();
-        }
-
         [Key]
         [Column("id", TypeName = "int(11)")]
         public int Id { get; set; }
@@ -35,8 +31,11 @@ namespace TAO_Backend.Models
         public double Power { get; set; }
         [Column("flow", TypeName = "int(11)")]
         public int Flow { get; set; }
+        [Column("house_reading_id", TypeName = "int(11)")]
+        public int HouseReadingId { get; set; }
 
-        [InverseProperty(nameof(User.House))]
-        public virtual ICollection<User> Users { get; set; }
+        [ForeignKey(nameof(HouseReadingId))]
+        [InverseProperty(nameof(House.DailyReadings))]
+        public virtual House HouseReading { get; set; }
     }
 }

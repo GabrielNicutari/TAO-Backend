@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace TAO_Backend.Models
 {
     [Table("users")]
-    [Index(nameof(HouseId), Name = "house_id_idx")]
+    [Index(nameof(HouseId), Name = "house_id_UNIQUE", IsUnique = true)]
     public partial class User
     {
         [Key]
@@ -30,20 +30,12 @@ namespace TAO_Backend.Models
         [Column("house_id", TypeName = "int(11)")]
         public int HouseId { get; set; }
         [Required]
-        [Column("address")]
-        [StringLength(45)]
-        public string Address { get; set; }
-        [Required]
-        [Column("zip")]
-        [StringLength(45)]
-        public string Zip { get; set; }
-        [Required]
         [Column("phone_number")]
         [StringLength(45)]
         public string PhoneNumber { get; set; }
 
         [ForeignKey(nameof(HouseId))]
-        [InverseProperty(nameof(DailyReading.Users))]
-        public virtual DailyReading House { get; set; }
+        [InverseProperty("User")]
+        public virtual House House { get; set; }
     }
 }
