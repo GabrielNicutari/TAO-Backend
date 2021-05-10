@@ -1,11 +1,9 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using TAO_Backend.Models;
 
 namespace TAO_Backend.CsvData
@@ -23,8 +21,7 @@ namespace TAO_Backend.CsvData
 
             System.Diagnostics.Debug.WriteLine(path);
 
-            using (var streamReader = new StreamReader(newPath)) 
-
+            using (var streamReader = new StreamReader(newPath))
             {
                 var config = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = ";" };
                 using (var csvReader = new CsvReader(streamReader, config))
@@ -64,6 +61,7 @@ namespace TAO_Backend.CsvData
                     for (int i = 0; i < 20; i++)
                     {
                         System.Diagnostics.Debug.WriteLine(records[i].Volume);
+                        //Console.WriteLine(records[i].Volume);
                     }
                 }
             }
