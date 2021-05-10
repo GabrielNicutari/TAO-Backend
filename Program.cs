@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System.Threading;
+using TAO_Backend.CsvData;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,15 @@ namespace TAO_Backend
     {
         public static async Task Main(string[] args)
         {
+            // start a separate thread which is responsible for watching for changes in the csv file and
+            // importing the data when the change occurs.
+            Thread thread = new Thread(() => 
+            {
+                var fileWatcher = new FileWatcher();
+                fileWatcher.Start();
+            });
+            thread.Start();
+            // then we start the program
             var host = CreateHostBuilder(args).Build();
 
             using var scope = host.Services.CreateScope();
