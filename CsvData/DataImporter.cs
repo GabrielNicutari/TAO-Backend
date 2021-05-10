@@ -30,7 +30,7 @@ namespace TAO_Backend.CsvData
                     csvReader.Context.RegisterClassMap<DailyReadingMapper>();
                     var records =
                         csvReader
-                            .GetRecords<DailyReading>()
+                            .GetRecords<DailyReadingCsv>()
                             .ToList();
 
 

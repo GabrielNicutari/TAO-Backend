@@ -3,7 +3,7 @@ using TAO_Backend.Models;
 
 namespace TAO_Backend.CsvData
 {
-    public sealed class DailyReadingMapper : ClassMap<DailyReading>
+    public sealed class DailyReadingMapper : ClassMap<DailyReadingCsv>
     {
         public DailyReadingMapper()
         {
