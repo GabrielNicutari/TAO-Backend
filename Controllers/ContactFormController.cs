@@ -4,24 +4,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TAO_Backend.Models;
+using TAO_Backend.Services;
 
 namespace TAO_Backend.Controllers
 {
     public class ContactFormController: BaseApiController
     {
         private readonly DBContext _context;
+        IEmailService _emailService = null;
         
-        public ContactFormController(DBContext context)
+        public ContactFormController(DBContext context, IEmailService emailService)
         {
             _context = context; 
+            _emailService = emailService;
         }
         
         [HttpPost]
-        public void PostContactForm([FromBody] ContactForm contactForm)
+        public bool PostContactForm([FromBody] ContactForm contactForm)
         {
-            // send email to us using the body of the request
-            Console.WriteLine("Sending email...");
-            Console.WriteLine(contactForm.message);
+            EmailData emailData = new EmailData
+            {
+                EmailBody =  $"Sender's name: {contactForm.name}\n\nMessage: {contactForm.message}" +
+                             $"\n\nSender's email: {contactForm.email}",
+                EmailSubject = "Someone contacted you via the website", 
+                EmailToId = "vrnova.update.user.profile@gmail.com", 
+                EmailToName = "Energy Department"
+            };
+            return _emailService.SendEmail(emailData);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace TAO_Backend.CsvData
         
         public void Start()
         {
-            Console.WriteLine("Hello from start");
             string path = AppDomain.CurrentDomain.BaseDirectory;
             string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\csv_files"));
             var filePaths = Directory.GetFiles(newPath, "*.csv",

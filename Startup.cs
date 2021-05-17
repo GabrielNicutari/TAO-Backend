@@ -1,18 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TAO_Backend.Models;
+using TAO_Backend.Services;
 
 namespace TAO_Backend
 {
@@ -24,13 +18,12 @@ namespace TAO_Backend
         {
             _config = config;
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.Configure<EmailSettings>(_config.GetSection("EmailSettings"));
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -40,6 +33,7 @@ namespace TAO_Backend
             {
                 opt.UseMySQL(_config.GetConnectionString("DefaultConnection"));
             });
+            services.AddTransient<IEmailService, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
