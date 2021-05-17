@@ -8,6 +8,7 @@ namespace TAO_Backend.CsvData
         public DailyReadingMapper()
         {
             Map(m => m.Timestamp).Name("Timestamp");
+            Map(m => m.HouseId).Name("HouseId");
             Map(m => m.Energy).Name("Energy");
             Map(m => m.Volume).Name("Volume");
             Map(m => m.HourCounter).Name("HourCounter");

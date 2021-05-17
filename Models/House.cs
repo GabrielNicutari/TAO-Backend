@@ -16,7 +16,17 @@ namespace TAO_Backend.Models
             DailyReadings = new HashSet<DailyReading>();
         }
 
+        public House(int id, string address, string zip, int area, int yearBuilt)
+        {
+            Id = id;
+            Address = address;
+            Zip = zip;
+            Area = area;
+            YearBuilt = yearBuilt;
+        }
+
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id", TypeName = "int(11)")]
         public int Id { get; set; }
         [Required]
