@@ -12,35 +12,36 @@ namespace TAO_Backend.CsvData
     public class DailyReadingImporter
     {
         private readonly DBContext _context;
-
-        public DailyReadingImporter()
-        {
-        }
-
-        public DailyReadingImporter(DBContext context)
+        private readonly string _filePath; // path to the file to be imported
+        public DailyReadingImporter(DBContext context, string filePath)
         {
             _context = context;
+            _filePath = filePath;
         }
-        
-        public async void Import()
+        public async void ImportAndSave()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-            string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\csv_files\Daily_readings_clean.csv"));
-
-            System.Diagnostics.Debug.WriteLine(path);
-
-            using var streamReader = new StreamReader(newPath);
+            List<DailyReadingCsv> records = ImportDataFromCsv();
+            records = RemoveCommasAndMultipleByThousand(records);
+            List<DailyReading> dailyReadingsList = mapDailyReadingCsvToDailyReading(records);
+            // // for testing
+            // for (int i = 0; i < 5; i++)
+            // {
+            //     Console.WriteLine($"date= {dailyReadingsList[i].Timestamp}, house id= {dailyReadingsList[i].HouseReadingId}");
+            // }
+            await _context.AddRangeAsync(dailyReadingsList);
+            await _context.SaveChangesAsync();
+            Console.WriteLine("\n\nData importing completed.");
+        }
+        private List<DailyReadingCsv> ImportDataFromCsv() 
+        {
+            using var streamReader = new StreamReader(_filePath);
             var config = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = ";" };
             using var csvReader = new CsvReader(streamReader, config);
-            // DATA IMPORTING
             csvReader.Context.RegisterClassMap<DailyReadingMapper>();
-            var records =
-                csvReader
-                    .GetRecords<DailyReadingCsv>()
-                    .ToList();
-
-
-            // DATA CLEANING
+            return csvReader.GetRecords<DailyReadingCsv>().ToList();
+        }
+        private List<DailyReadingCsv> RemoveCommasAndMultipleByThousand(List<DailyReadingCsv> records)
+        {
             records.ForEach(record =>
             {
                 if (record.Energy.Contains(",") || record.Energy.Length < 4)
@@ -52,7 +53,6 @@ namespace TAO_Backend.CsvData
                     energyValue *= 1000;
                     record.Energy = energyValue.ToString(CultureInfo.InvariantCulture);
                 }
-
                 if (record.Volume.Contains(",")) 
                 {
                     var volumeValue = Double.Parse(record.Volume, new CultureInfo(CultureInfo.CurrentCulture.Name)
@@ -63,8 +63,11 @@ namespace TAO_Backend.CsvData
                     record.Volume = volumeValue.ToString(CultureInfo.InvariantCulture);
                 }
             });
-            
-            var dailyReadingsList = new List<DailyReading>();
+            return records;
+        }
+        private List<DailyReading> mapDailyReadingCsvToDailyReading(List<DailyReadingCsv> records)
+        {
+            List<DailyReading> dailyReadingsList = new List<DailyReading>();
             records.ForEach(record =>
             {
                 DailyReading dailyReading = new DailyReading(
@@ -80,9 +83,7 @@ namespace TAO_Backend.CsvData
                 );
                 dailyReadingsList.Add(dailyReading);
             });
-            await _context.AddRangeAsync(dailyReadingsList);
-            await _context.SaveChangesAsync();
-            Console.WriteLine("\n\nData importing completed.");
+            return dailyReadingsList;
         }
     }
 }

@@ -15,7 +15,6 @@ namespace TAO_Backend
     {
         public static async Task Main(string[] args)
         {
-            int number = Process.GetCurrentProcess().Threads.Count;
             var host = CreateHostBuilder(args).Build();
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;

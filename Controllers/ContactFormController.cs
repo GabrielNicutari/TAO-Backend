@@ -10,15 +10,11 @@ namespace TAO_Backend.Controllers
 {
     public class ContactFormController: BaseApiController
     {
-        private readonly DBContext _context;
-        IEmailService _emailService = null;
-        
-        public ContactFormController(DBContext context, IEmailService emailService)
+        private readonly IEmailService _emailService;
+        public ContactFormController(IEmailService emailService)
         {
-            _context = context; 
             _emailService = emailService;
         }
-        
         [HttpPost]
         public bool PostContactForm([FromBody] ContactForm contactForm)
         {
