@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Net;
-using System.Web;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Web.Script.Serialization;
 
 namespace TAO_Backend.Services
 {
@@ -8,30 +10,48 @@ namespace TAO_Backend.Services
     {
         public string[] Translate(string[] words, string toLanguage)
         {
-            for (int i = 0; i < words.Length; i++)
-            {
-                words[i] = TranslateSingleString(words[i], toLanguage);
-            }
-            return words;
+            string input = String.Join("*", words); 
+            string translation = TranslateString(input, toLanguage);
+            return translation.Split("*");
         }
-        private string TranslateSingleString(string word, string toLanguage)
+        private string TranslateString(string input, string toLanguage)
         {
-            var fromLanguage = "en"; // English
-            var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={fromLanguage}&tl={toLanguage}&dt=t&q={HttpUtility.UrlEncode(word)}";
-            var webClient = new WebClient
+            string fromLanguage = "en"; // English
+            string url =
+                $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={fromLanguage}&tl={toLanguage}&dt=t&q={Uri.EscapeUriString(input)}";
+            HttpClient httpClient = new HttpClient();
+            string result = httpClient.GetStringAsync(url).Result;
+
+            // Get all json data
+            var jsonData = new JavaScriptSerializer().Deserialize<List<dynamic>>(result);
+
+            // Extract just the first array element (This is the only data we are interested in)
+            var translationItems = jsonData[0];
+
+            // Translation Data
+            string translation = "";
+
+            // Loop through the collection extracting the translated objects
+            foreach (object item in translationItems)
             {
-                Encoding = System.Text.Encoding.UTF8
-            };
-            var result = webClient.DownloadString(url);
-            try
-            {
-                result = result.Substring(4, result.IndexOf("\"", 4, StringComparison.Ordinal) - 4);
-                return result;
+                // Convert the item array to IEnumerable
+                IEnumerable translationLineObject = item as IEnumerable;
+
+                // Convert the IEnumerable translationLineObject to a IEnumerator
+                IEnumerator translationLineString = translationLineObject.GetEnumerator();
+
+                // Get first object in IEnumerator
+                translationLineString.MoveNext();
+
+                // Save its value (translated text)
+                translation += string.Format(" {0}", Convert.ToString(translationLineString.Current));
             }
-            catch
-            {
-                return "Error";
-            }
+
+            // Remove first blank character
+            if (translation.Length > 1) { translation = translation.Substring(1); };
+
+            // Return translation
+            return translation;
         }
     }
 }
