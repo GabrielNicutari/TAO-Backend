@@ -6,11 +6,16 @@ namespace TAO_Backend.Controllers
 {
     public class TranslationController: BaseApiController
     {
+        private readonly ITranslationService _translationService;
+        public TranslationController(ITranslationService translationService)
+        {
+            _translationService = translationService; 
+        }
+        
         [HttpPost]
         public string[] PostContactForm([FromBody] PageWords pageWords)
         {
-            TranslationService translationService = new TranslationService();
-            return translationService.Translate(pageWords.Words, pageWords.ToLanguage);
+            return _translationService.Translate(pageWords.Words, pageWords.ToLanguage);
         }
     }
 }

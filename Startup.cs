@@ -34,6 +34,7 @@ namespace TAO_Backend
                 opt.UseMySQL(_config.GetConnectionString("DefaultConnection"));
             });
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ITranslationService, TranslationService>();
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>

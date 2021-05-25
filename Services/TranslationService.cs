@@ -6,7 +6,7 @@ using System.Web.Script.Serialization;
 
 namespace TAO_Backend.Services
 {
-    public class TranslationService
+    public class TranslationService: ITranslationService
     {
         public string[] Translate(string[] words, string toLanguage)
         {
