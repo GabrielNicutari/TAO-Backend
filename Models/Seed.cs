@@ -21,7 +21,7 @@ namespace TAO_Backend.Models
 
                 foreach (var user in users)
                 {
-                    await userManager.CreateAsync(user, "Pa$$word");
+                    await userManager.CreateAsync(user, "Pa$$word1");
                     System.Diagnostics.Debug.WriteLine("Created");
                 }
             }

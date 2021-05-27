@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,6 +42,14 @@ namespace TAO_Backend
                     policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
             });
+            services.AddIdentityCore<AppUser>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+            })
+            .AddEntityFrameworkStores<DBContext>()
+            .AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
