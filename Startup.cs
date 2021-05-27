@@ -1,8 +1,11 @@
+using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +30,7 @@ namespace TAO_Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<EmailSettings>(_config.GetSection("EmailSettings"));
-            
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

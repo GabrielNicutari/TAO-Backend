@@ -9,6 +9,7 @@ using TAO_Backend.Models;
 
 namespace TAO_Backend.Controllers
 {
+    [Authorize]
     public class DailyReadingsController: BaseApiController
     {
         private readonly DBContext _context;
@@ -24,7 +25,6 @@ namespace TAO_Backend.Controllers
             return await _context.DailyReadings.ToListAsync();
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<DailyReading>> GetDailyReading(int id)
         {
