@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using TAO_Backend.Models;
 using TAO_Backend.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace TAO_Backend
 {
@@ -20,6 +21,7 @@ namespace TAO_Backend
             // string[] words = new string[] { "hello", "there", "play with me tonight!" };
             // string[] result = translationService.TranslateWords(words, "el");
             var host = CreateHostBuilder(args).Build();
+            
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             try
@@ -31,6 +33,8 @@ namespace TAO_Backend
                     fileWatcher.Start();
                 });
                 thread.Start();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                await Seed.SeedData(userManager);
             }
             catch (Exception ex)
             {

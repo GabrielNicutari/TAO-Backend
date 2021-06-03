@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TAO_Backend.Models;
 
 namespace TAO_Backend.Controllers
 {
+    [Authorize]
     public class DailyReadingsController: BaseApiController
     {
         private readonly DBContext _context;

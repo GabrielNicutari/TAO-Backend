@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace TAO_Backend.Models
 {
-    public partial class DBContext : DbContext
+    public partial class DBContext : IdentityDbContext<AppUser>
     {
         private readonly IConfiguration _config;
         public DBContext()
@@ -35,6 +36,7 @@ namespace TAO_Backend.Models
         {
             modelBuilder.Entity<DailyReading>(entity =>
             {
+                base.OnModelCreating(modelBuilder);
                 entity.HasOne(d => d.HouseReading)
                     .WithMany(p => p.DailyReadings)
                     .HasForeignKey(d => d.HouseReadingId)
@@ -43,6 +45,7 @@ namespace TAO_Backend.Models
 
             modelBuilder.Entity<User>(entity =>
             {
+                base.OnModelCreating(modelBuilder);
                 entity.HasOne(d => d.House)
                     .WithOne(p => p.User)
                     .HasForeignKey<User>(d => d.HouseId)
