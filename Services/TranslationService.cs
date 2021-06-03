@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace TAO_Backend.Services
 {
@@ -23,7 +23,8 @@ namespace TAO_Backend.Services
             string result = httpClient.GetStringAsync(url).Result;
 
             // Get all json data
-            var jsonData = new JavaScriptSerializer().Deserialize<List<dynamic>>(result);
+            // var jsonData = new JsonConvert.Deserialize<List<dynamic>>(result);
+            List<dynamic> jsonData = JsonConvert.DeserializeObject<List<dynamic>>(result);
 
             // Extract just the first array element (This is the only data we are interested in)
             var translationItems = jsonData[0];
