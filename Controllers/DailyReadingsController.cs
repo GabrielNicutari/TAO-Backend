@@ -20,9 +20,11 @@ namespace TAO_Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<DailyReading>>> GetDailyReadings()
+        public async Task<ActionResult<List<DailyReading>>> GetDailyReadings(int houseId, int numberLatestObservations)
         {
-            return await _context.DailyReadings.ToListAsync();
+            return await _context.DailyReadings.FromSqlInterpolated
+                ($"SELECT * From taodb.daily_readings Where house_reading_id = {houseId} Limit {numberLatestObservations}")
+                .ToListAsync();
         }
 
         [HttpGet("{id}")]
