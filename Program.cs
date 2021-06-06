@@ -17,9 +17,6 @@ namespace TAO_Backend
     {
         public static async Task Main(string[] args)
         {
-            // TranslationService translationService = new TranslationService();
-            // string[] words = new string[] { "hello", "there", "play with me tonight!" };
-            // string[] result = translationService.TranslateWords(words, "el");
             var host = CreateHostBuilder(args).Build();
             
             using var scope = host.Services.CreateScope();
