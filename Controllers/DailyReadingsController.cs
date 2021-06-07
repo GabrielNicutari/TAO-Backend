@@ -38,9 +38,9 @@ namespace TAO_Backend.Controllers
         {
             DailyReadingStats dailyReadingStats = new DailyReadingStats
             {
-                AvgEnergy = _context.DailyReadings.Average(dr => dr.Energy),
-                MinEnergy = _context.DailyReadings.Min(dr => dr.Energy),
-                MaxEnergy = _context.DailyReadings.Max(dr => dr.Energy)
+                AvgEnergy = _context.DailyReadings.Where(dr => dr.HouseReadingId == houseId).Average(dr => dr.Energy),
+                MinEnergy = _context.DailyReadings.Where(dr => dr.HouseReadingId == houseId).Min(dr => dr.Energy),
+                MaxEnergy = _context.DailyReadings.Where(dr => dr.HouseReadingId == houseId).Max(dr => dr.Energy)
             };
             return dailyReadingStats;
         }
