@@ -9,7 +9,7 @@ using TAO_Backend.Models;
 
 namespace TAO_Backend.Controllers
 {
-    [Authorize]
+    
     public class DailyReadingsController: BaseApiController
     {
         private readonly DBContext _context;
@@ -31,6 +31,18 @@ namespace TAO_Backend.Controllers
         public async Task<ActionResult<DailyReading>> GetDailyReading(int id)
         {
             return await _context.DailyReadings.FindAsync(id);
+        }
+
+        [HttpGet("statistics")]
+        public async Task<ActionResult<DailyReadingStats>> GetStats(int houseId)
+        {
+            DailyReadingStats dailyReadingStats = new DailyReadingStats
+            {
+                AvgEnergy = _context.DailyReadings.Average(dr => dr.Energy),
+                MinEnergy = _context.DailyReadings.Min(dr => dr.Energy),
+                MaxEnergy = _context.DailyReadings.Max(dr => dr.Energy)
+            };
+            return dailyReadingStats;
         }
     }
 }
