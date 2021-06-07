@@ -23,7 +23,7 @@ namespace TAO_Backend.Controllers
         public async Task<ActionResult<List<DailyReading>>> GetDailyReadings(int houseId, int numberLatestObservations)
         {
             return await _context.DailyReadings.FromSqlInterpolated
-                ($"SELECT * From taodb.daily_readings Where house_reading_id = {houseId} Limit {numberLatestObservations}")
+                ($"SELECT * From taodb.daily_readings Where house_reading_id = {houseId} ORDER BY timestamp DESC Limit {numberLatestObservations}")
                 .ToListAsync();
         }
 

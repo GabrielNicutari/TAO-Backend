@@ -1,6 +1,6 @@
 Timestamp;HouseId;Energy;;Volume;;HourCounter;;TempForward;;TempReturn;;Power;;Flow;;;;;;ForwardedUsage;;ReturnedUsage;;;;;;ColumnX;;
 29-02-2020 23.00;1;3179,5;MWh;56387,8;M3;6048;h;90,7;c;38,1;c;982,4;kW;16650;l/h;0;;0;;5407,9;MWh;2228,3;MWh;0;;0;;0;d;IZAR Plus Portal
-29-02-2020 23.01;2;12178;MWh;366869;M3;14976;h;57,8;c;31,4;c;0,2;kW;8;l/h;0;;0;;24199;MWh;12021;MWh;0;;0;;181;d;IZAR Plus Portal
+29-02-2020 23.01;2;17130;MWh;426810;M3;17976;h;60,8;c;34,9;c;0,3;kW;8;l/h;0;;0;;28100;MWh;15021;MWh;0;;0;;181;d;IZAR Plus Portal
 29-02-2020 23.02;3;19661;MWh;695487;M3;16392;h;63,2;c;45,4;c;2,5;kW;124;l/h;0;;0;;48181;MWh;28,52;MWh;0;;0;;123;d;IZAR Plus Portal
 29-02-2020 23.03;4;8592;MWh;290605;M3;14808;h;59,9;c;22,4;c;1,2;kW;27;l/h;0;;0;;19044;MWh;10451;MWh;0;;0;;189;d;IZAR Plus Portal
 29-02-2020 23.04;5;13945;MWh;403497;M3;14808;h;61,2;c;25,6;c;1,5;kW;36;l/h;0;;0;;27641;MWh;13696;MWh;0;;0;;189;d;IZAR Plus Portal
