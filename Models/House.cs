@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 #nullable disable
 
@@ -42,8 +43,9 @@ namespace TAO_Backend.Models
         [Column("year_built", TypeName = "int(11)")]
         public int YearBuilt { get; set; }
 
+        
         [InverseProperty("House")]
-        public virtual User User { get; set; }
+        public virtual AppUser User { get; set; }
         [InverseProperty(nameof(DailyReading.HouseReading))]
         public virtual ICollection<DailyReading> DailyReadings { get; set; }
     }

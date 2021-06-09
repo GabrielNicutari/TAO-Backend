@@ -34,8 +34,8 @@ namespace TAO_Backend.Models
         [StringLength(45)]
         public string PhoneNumber { get; set; }
 
-        [ForeignKey(nameof(HouseId))]
-        [InverseProperty("User")]
-        public virtual House House { get; set; }
+        // [ForeignKey(nameof(HouseId))]
+        // [InverseProperty("User")]
+        // public virtual House House { get; set; }
     }
 }

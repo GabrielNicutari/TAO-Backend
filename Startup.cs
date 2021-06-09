@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -70,6 +71,8 @@ namespace TAO_Backend
                     };
                 });
             services.AddScoped<TokenService>();
+
+            services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

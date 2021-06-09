@@ -43,14 +43,14 @@ namespace TAO_Backend.Models
                     .HasConstraintName("house_reading_id");
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                base.OnModelCreating(modelBuilder);
-                entity.HasOne(d => d.House)
-                    .WithOne(p => p.User)
-                    .HasForeignKey<User>(d => d.HouseId)
-                    .HasConstraintName("house_id");
-            });
+            // modelBuilder.Entity<User>(entity =>
+            // {
+            //     base.OnModelCreating(modelBuilder);
+            //     entity.HasOne(d => d.House)
+            //         .WithOne(p => p.User)
+            //         .HasForeignKey<User>(d => d.HouseId)
+            //         .HasConstraintName("house_id");
+            // });
 
             OnModelCreatingPartial(modelBuilder);
         }
