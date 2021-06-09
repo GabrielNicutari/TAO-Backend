@@ -9,7 +9,7 @@ using TAO_Backend.Models;
 
 namespace TAO_Backend.Controllers
 {
-    
+    [Authorize]
     public class DailyReadingsController: BaseApiController
     {
         private readonly DBContext _context;
