@@ -16,7 +16,7 @@ namespace TAO_Backend.Models
 
         [Column("house_id", TypeName = "int(11)")]
         public int HouseId { get; set; }
-    
+
         [ForeignKey(nameof(HouseId))]
         [InverseProperty("User")]
         public virtual House House { get; set; }

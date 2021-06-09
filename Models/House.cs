@@ -43,7 +43,7 @@ namespace TAO_Backend.Models
         [Column("year_built", TypeName = "int(11)")]
         public int YearBuilt { get; set; }
 
-        
+        [JsonIgnore]
         [InverseProperty("House")]
         public virtual AppUser User { get; set; }
         [InverseProperty(nameof(DailyReading.HouseReading))]
